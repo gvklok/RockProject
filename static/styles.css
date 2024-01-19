@@ -1,0 +1,158 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-image: url('templates/RockImages/RedRocks.jpeg');
+
+    /* Optional properties for background display */
+    background-size: cover; /* Cover the entire background */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+   background-color: #e0e0d1; /*Soft beige or light brown color for outdoorsy feel */
+}
+
+h1 {
+    color: #4c6f50; /* Dark green for titles */
+}
+
+.home .back-btn {
+    position: static; /* Reset position */
+    margin-top: 20px; /* Adjust the top margin to create space */
+    display: block;
+}
+
+.home .back-btn + .back-btn {
+    margin-top: 10px; /* Adjust spacing between buttons */
+}
+#output {
+    font-size: 2em;
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #4c6f50; /* Dark green border */
+    border-radius: 5px;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff; /* White background for the output */
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #4c6f50; /* Dark green button */
+    color: white;
+}
+
+button:hover {
+    background-color: #6f9f7d; /* Lighter green on hover */
+}
+
+.custom-btn {
+    display: block;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #a9714b; /* Brown color for back button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px auto;
+    top: 10px;
+    left: 10px;
+}
+
+.custom-btn:hover {
+    background-color: #b88665; /* Lighter green on hover */
+}
+
+.back-btn {
+    display: block;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #a9714b; /* Brown color for back button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.back-btn:hover {
+    background-color: #b88665; /* Darker brown on hover */
+}
+
+.control-btn {
+    padding: 8px 16px; /* Adjusted padding */
+    margin: 8px; /* Adjusted margin */
+    font-size: 14px; /* Slightly smaller font size */
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #4c6f50; /* Dark green control button */
+    color: white;
+}
+
+
+.control-btn:hover {
+    background-color: #6f9f7d; /* Lighter green on hover */
+}
+.exercise-container {
+    margin-top: 10px;
+}
+
+.difficulty-buttons {
+    margin-bottom: 10px;
+}
+
+.difficulty-buttons button {
+    padding: 8px 16px;
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #4c6f50;
+    color: white;
+}
+
+.difficulty-buttons button:hover {
+    background-color: #6f9f7d;
+}
+
+/* Existing styles... */
+
+.workout-instructions {
+    text-align: left;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #4c6f50;
+    border-radius: 5px;
+    background-color: #fff;
+    display: block;
+    width: 300px; /* Set the width to your desired size */
+    height: 425px; /* Set the height to your desired size */
+    overflow: auto; /* Enable scrolling within the box */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+}
+
+/* Define a class for the workout details to create a tabular structure */
+.workout-details {
+    display: grid;
+    grid-template-columns: auto auto; /* Two columns for key-value pairs */
+    gap: 10px; /* Gap between columns */
+}
+
+/* Style for the key (left side of colon) */
+.workout-details .key {
+    text-align: right; /* Align the key text to the right */
+}
+
+/* Style for the value (right side of colon) */
+.workout-details .value {
+    text-align: left; /* Align the value text to the left */
+}

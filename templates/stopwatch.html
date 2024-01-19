@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stopwatch & Hangboard Exercises</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        var startTime = 0;
+        var running = 0;
+
+        function startPause() {
+            if (running == 0) {
+                running = 1;
+                increment();
+                document.getElementById("startPause").innerHTML = "Pause";
+            } else {
+                running = 0;
+                document.getElementById("startPause").innerHTML = "Resume";
+            }
+        }
+
+        function reset() {
+            running = 0;
+            document.getElementById("output").innerHTML = "00:00:00";
+            document.getElementById("startPause").innerHTML = "Start";
+        }
+
+        function increment() {
+            if (running == 1) {
+                setTimeout(function () {
+                    startTime++;
+                    var mins = Math.floor(startTime / 10 / 60);
+                    var secs = Math.floor(startTime / 10 % 60);
+                    var tenths = startTime % 10;
+
+                    if (mins < 10) {
+                        mins = "0" + mins;
+                    }
+                    if (secs < 10) {
+                        secs = "0" + secs;
+                    }
+
+                    document.getElementById("output").innerHTML = mins + ":" + secs + ":" + "0" + tenths;
+                    increment();
+                }, 100);
+            }
+        }
+function delay() {
+    var dropdown = document.getElementById("delayOptions");
+    if (dropdown.style.display === "none") {
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
+}
+
+function startWithDelay() {
+    var delaySeconds = parseInt(document.getElementById("delaySelect").value);
+
+    // Disable delay dropdown during the delay period
+    document.getElementById("delayDropdown").disabled = true;
+
+    // Hide delay options
+    document.getElementById("delayOptions").style.display = "none";
+
+    // Show the countdown before starting
+    document.getElementById("output").innerHTML = "Delaying start...";
+
+    setTimeout(function () {
+        running = 1;
+        increment();
+        document.getElementById("startPause").innerHTML = "Pause";
+
+        // Enable delay dropdown after the delay period
+        document.getElementById("delayDropdown").disabled = false;
+    }, delaySeconds * 1000);
+}
+
+        function fetchWorkout(url, key) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const workoutText = data[key];
+                    const workoutDiv = document.getElementById('workoutInstructions');
+                    workoutDiv.innerHTML = workoutText;
+                    workoutDiv.style.display = 'block';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Stopwatch & Hangboard Exercises</h1>
+    <div id="output">00:00:00</div>
+    <button onclick="startPause()" id="startPause" class="control-btn">Start</button>
+    <button onclick="reset()" class="control-btn">Reset</button>
+
+    <a href="/" class="back-btn">Back</a>
+    <div class="exercise-container">
+        <h2>Select level of difficulty</h2>
+        <div class="difficulty-buttons">
+            <button onclick="fetchWorkout('/easy', 'easy_workout')">Easy</button>
+            <button onclick="fetchWorkout('/medium', 'medium_workout')">Medium</button>
+            <button onclick="fetchWorkout('/hard', 'hard_workout')">Hard</button>
+        </div>
+        <div id="workoutInstructions" class="workout-instructions" style="display: none;"></div>
+        <a href="/" class="back-btn">Back</a>
+    </div>
+</body>
+</html>

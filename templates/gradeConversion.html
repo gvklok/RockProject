@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <title>Grade Conversion</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <a href="/" class="back-btn">Back</a>
+    <h1>Grade Conversion</h1>
+    <p>You can either get grade conversion or study grades:</p>
+    <button onclick="getGradeConversion()">Get Grade Conversion</button>
+    <button onclick="startStudyGrades()">Study Grades</button>
+
+    <div id="result"></div>
+
+    <script>
+       function getGradeConversion() {
+           document.getElementById('result').innerHTML = `
+        <p>Enter a grade to convert:</p>
+        <input type="text" id="gradeInput" placeholder="Enter grade">
+        <button onclick="convertGrade()">Convert</button>
+        <div id="result"></div>
+        <div id="conversionResult"></div>
+
+    `;
+}
+
+function startStudyGrades() {
+    fetch('/study_grades')
+        .then(response => response.json())
+        .then(data => {
+            displayQuestion(data);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function displayQuestion(data) {
+    const question = data.question;
+    const streak = data.streak;
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '';
+
+    const questionDiv = document.createElement('div');
+    questionDiv.innerHTML = `<p>What is the equivalent grade to ${question}?</p>
+                             <input type="text" id="answerInput" placeholder="Enter your answer">
+                             <button onclick="checkAnswer('${data.correct_answer}')">Submit Answer</button>`;
+    resultDiv.appendChild(questionDiv);
+
+    if (streak >= 1) {
+        resultDiv.innerHTML += `<p>Correct! your streak is ${streak}</p>`;
+    }
+}
+
+function checkAnswer(correctAnswer) {
+    const userAnswer = document.getElementById('answerInput').value;
+
+    fetch('/check_answer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ answer: userAnswer, correct_answer: correctAnswer }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('result');
+        if (!data.correct) {
+            resultDiv.innerHTML = `<p>${data.message}</p><button onclick="startStudyGrades()">Continue</button>`;
+        } else {
+            resultDiv.innerHTML = `<p>${data.message}</p>`;
+            startStudyGrades(); // Ask a new question on correct answer
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+        function convertGrade() {
+            const grade = document.getElementById('gradeInput').value;
+
+            fetch(`/grade_conversion?grade=${grade}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the equivalent grade obtained from the Flask backend
+                    const resultDiv = document.getElementById('conversionResult');
+                    resultDiv.innerHTML = `<p>Equivalent grade: ${data.equivalent_grade}</p>`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+
+    </script>
+</body>
+</html>
